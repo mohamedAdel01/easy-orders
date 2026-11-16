@@ -44,24 +44,39 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
     <div className="flex flex-col gap-4 select-none">
       {/* Top Container: Main Image + External Floating Actions Strip */}
       <div className="flex gap-3 sm:gap-4 items-stretch">
-        {/* Main Image with rounded-2xl */}
+        {/* Main Image with rounded-2xl & Smooth Crossfade Transitions */}
         <div
-          className="flex-1 relative aspect-[3/4] sm:aspect-[4/5] rounded-2xl overflow-hidden bg-[#f4f4f4] cursor-zoom-in group"
+          className="flex-1 relative aspect-[3/4] sm:aspect-[4/5] rounded-2xl overflow-hidden bg-[#f4f4f4] cursor-zoom-in group select-none"
           onMouseEnter={() => setIsZoomed(true)}
           onMouseLeave={() => setIsZoomed(false)}
           onMouseMove={handleMouseMove}
         >
-          <img
-            src={images[activeIndex]}
-            alt={product.name}
-            className="w-full h-full object-cover object-center transition-transform duration-300"
-            style={
-              isZoomed
-                ? { transform: 'scale(2.2)', transformOrigin: `${zoomPos.x}% ${zoomPos.y}%` }
-                : { transform: 'scale(1)' }
-            }
-            loading="eager"
-          />
+          {images.map((img, index) => {
+            const isActive = index === activeIndex;
+            return (
+              <img
+                key={img}
+                src={img}
+                alt={`${product.name} - view ${index + 1}`}
+                className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 ease-in-out ${
+                  isActive ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'
+                }`}
+                style={
+                  isActive && isZoomed
+                    ? {
+                        transform: 'scale(2.2)',
+                        transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
+                        transition: 'transform 0.12s ease-out, opacity 0.5s ease-in-out',
+                      }
+                    : {
+                        transform: 'scale(1)',
+                        transition: 'transform 0.3s ease-out, opacity 0.5s ease-in-out',
+                      }
+                }
+                loading={index === 0 ? 'eager' : 'lazy'}
+              />
+            );
+          })}
         </div>
 
         {/* EXTERNAL Action Buttons Strip (Positioned OUTSIDE the image to the side!) */}
@@ -114,23 +129,24 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
         </div>
       </div>
 
-      {/* Thumbnails Row: 5 portrait cards with rounded-xl */}
+      {/* Thumbnails Row: 5 portrait cards with rounded-xl and smooth transitions */}
       {images.length > 1 && (
         <div className="grid grid-cols-5 gap-3">
           {images.slice(0, 5).map((img, i) => (
             <button
               key={i}
+              type="button"
               onClick={() => setActiveIndex(i)}
-              className={`aspect-[3/4] rounded-xl overflow-hidden bg-[#f4f4f4] transition-all duration-150 ${
+              className={`aspect-[3/4] rounded-xl overflow-hidden bg-[#f4f4f4] transition-all duration-300 transform active:scale-95 cursor-pointer ${
                 i === activeIndex
-                  ? 'border-2 border-black ring-1 ring-black shadow-sm'
-                  : 'border border-transparent hover:border-gray-300 opacity-80 hover:opacity-100'
+                  ? 'border-2 border-black ring-1 ring-black shadow-sm scale-[1.02]'
+                  : 'border border-transparent hover:border-gray-300 opacity-70 hover:opacity-100 hover:scale-[1.01]'
               }`}
             >
               <img
                 src={img}
                 alt={`${product.name} thumbnail ${i + 1}`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-300"
                 loading="lazy"
               />
             </button>

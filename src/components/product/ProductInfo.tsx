@@ -5,7 +5,6 @@ import { useProductStore } from '../../store/productStore';
 import { useCartStore } from '../../store/cartStore';
 import { useI18n } from '../../hooks/useI18n';
 import VariationSelector from './VariationSelector';
-import QuantitySelector from '../ui/QuantitySelector';
 
 interface ProductInfoProps {
   product: Product;
@@ -14,7 +13,7 @@ interface ProductInfoProps {
 export default function ProductInfo({ product }: ProductInfoProps) {
   const [addedToCart, setAddedToCart] = useState(false);
   const [showFullDesc, setShowFullDesc] = useState(false);
-  const [quantity, setQuantity] = useState(1);
+  const quantity = 1;
   const { t } = useI18n();
 
   const { selectedVariations, selectedVariant, getCurrentPrice, getOriginalPrice } = useProductStore();
@@ -30,7 +29,6 @@ export default function ProductInfo({ product }: ProductInfoProps) {
   // Stock status from selectedVariant or product
   const stockCount = selectedVariant ? selectedVariant.quantity : (product.quantity ?? 15);
   const isOutOfStock = product.track_stock && stockCount <= 0;
-  const isLowStock = product.track_stock && stockCount > 0 && stockCount <= 5;
   const maxStock = product.track_stock ? Math.max(1, stockCount) : 99;
 
   const validateVariations = useCallback((): boolean => {
@@ -158,36 +156,6 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           ))}
         </div>
       ) : null}
-
-      {/* Quantity Selector & Stock Status Indicator */}
-      <div className="flex items-center justify-between gap-4 py-3 border-y border-dashed border-gray-200 mb-6">
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-semibold text-gray-700">{t('Quantity:')}</span>
-          <QuantitySelector
-            quantity={quantity}
-            min={1}
-            max={maxStock}
-            onChange={setQuantity}
-          />
-        </div>
-
-        {/* Stock Status */}
-        <div className="text-xs font-medium flex items-center gap-1.5">
-          {isOutOfStock ? (
-            <span className="text-red-500 font-semibold">{t('Out of Stock')}</span>
-          ) : isLowStock ? (
-            <span className="text-amber-600 font-semibold flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-              {t('Only')} {stockCount} {t('left in stock')}
-            </span>
-          ) : (
-            <span className="text-emerald-600 font-semibold flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-              {t('In Stock')}
-            </span>
-          )}
-        </div>
-      </div>
 
       {/* Action Buttons: Add To Cart & Checkout Now */}
       <div className="flex flex-row gap-3 sm:gap-4 mt-6 mb-3">

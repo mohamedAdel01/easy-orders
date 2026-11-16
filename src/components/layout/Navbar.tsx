@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Heart, Menu, X, Globe } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { SearchIcon, UserIcon, ChevronArrowIcon, CartIcon } from '../icons';
 import { useCartStore } from '../../store/cartStore';
 import { useWishlistStore } from '../../store/wishlistStore';
 import { useI18n } from '../../hooks/useI18n';
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState({ minutes: 20, seconds: 40 });
   const { getTotalItems, toggleCart } = useCartStore();
   const { getTotalItems: getWishlistTotal, openWishlist } = useWishlistStore();
-  const { t, toggleLanguage, language } = useI18n();
+  const { t } = useI18n();
   const totalItems = getTotalItems();
   const totalWishlist = getWishlistTotal();
 
@@ -49,22 +48,22 @@ export default function Navbar() {
       </div>
 
       {/* Main Header */}
-      <header className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-[0_1px_2px_rgba(0,0,0,0.02)] select-none">
+      <header className="sticky top-0 z-40 bg-white border-b border-dashed border-gray-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)] select-none">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-18 sm:h-20 gap-4">
+          <div className="flex items-center justify-between h-14 sm:h-20 gap-3 sm:gap-4">
             {/* Brand Logo - JOHN LEWIS & PARTNERS */}
             <div className="flex-shrink-0">
               <a href="/" className="block">
                 <img
                   src="/logo.png"
                   alt="John Lewis & Partners"
-                  className="h-6 sm:h-7 w-auto object-contain"
+                  className="h-5 sm:h-7 w-auto object-contain"
                 />
               </a>
             </div>
 
             {/* Right Navigation Controls */}
-            <div className="flex items-center gap-4 sm:gap-6 text-xs text-gray-700">
+            <div className="flex items-center gap-3 sm:gap-6 text-xs text-gray-700">
               {/* 1. Search Icon (Figma Frame 7.svg) */}
               <button
                 className="p-1 hover:text-black transition-colors"
@@ -122,10 +121,10 @@ export default function Navbar() {
                 </div>
               </button>
 
-              {/* 6. Official Figma Cart Icon with count */}
+              {/* 6. Official Figma Cart Icon with count (Desktop / Tablet in header, Mobile has FloatingCartButton) */}
               <button
                 onClick={toggleCart}
-                className="flex items-center gap-1 p-1 hover:text-black transition-colors relative cursor-pointer"
+                className="hidden sm:flex items-center gap-1 p-1 hover:text-black transition-colors relative cursor-pointer"
                 aria-label={t('Shopping bag')}
                 title={t('Shopping bag')}
               >
@@ -136,35 +135,8 @@ export default function Navbar() {
                   </span>
                 </div>
               </button>
-
-              {/* Mobile Hamburger Toggle */}
-              <button
-                className="md:hidden p-1 text-gray-700 hover:text-black"
-                onClick={() => setMenuOpen(!menuOpen)}
-                aria-label={t('Menu')}
-              >
-                {menuOpen ? <X size={20} /> : <Menu size={20} />}
-              </button>
             </div>
           </div>
-
-          {/* Mobile Menu Dropdown */}
-          {menuOpen && (
-            <div className="md:hidden py-4 border-t border-gray-100 flex flex-col gap-3">
-              <nav className="flex flex-col gap-2.5 text-xs font-medium text-gray-700">
-                <a href="#" className="py-1">{t('Women')}</a>
-                <a href="#" className="py-1">{t('Menswear')}</a>
-                <a href="#" className="py-1">{t('Sign in')}</a>
-                <button
-                  onClick={toggleLanguage}
-                  className="py-1 text-start font-semibold text-black flex items-center gap-2"
-                >
-                  <Globe size={14} />
-                  <span>{language === 'ar' ? 'Switch to English' : 'التحويل للعربية'}</span>
-                </button>
-              </nav>
-            </div>
-          )}
         </div>
       </header>
     </>

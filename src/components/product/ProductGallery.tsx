@@ -46,7 +46,7 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
       <div className="flex gap-3 sm:gap-4 items-stretch">
         {/* Main Image with rounded-2xl & Smooth Crossfade Transitions */}
         <div
-          className="flex-1 relative aspect-[3/4] sm:aspect-[4/5] rounded-2xl overflow-hidden bg-[#f4f4f4] cursor-zoom-in group select-none"
+          className="flex-1 relative aspect-[3/4] sm:aspect-[4/5] rounded-2xl overflow-hidden bg-[#f4f4f4] cursor-zoom-in group select-none w-full"
           onMouseEnter={() => setIsZoomed(true)}
           onMouseLeave={() => setIsZoomed(false)}
           onMouseMove={handleMouseMove}
@@ -77,10 +77,54 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
               />
             );
           })}
+
+          {/* Mobile Overlay: Floating Share & Wishlist Buttons (hidden on desktop) */}
+          <div className="lg:hidden absolute top-3 end-3 z-20 flex items-center gap-2">
+            <button
+              onClick={() => {
+                navigator.clipboard?.writeText(window.location.href);
+                alert(t('Product link copied to clipboard!'));
+              }}
+              className="w-9 h-9 rounded-xl bg-white/90 backdrop-blur-sm shadow-sm flex items-center justify-center text-gray-800 active:scale-95 transition-all cursor-pointer border border-gray-100"
+              title={t('Share')}
+              aria-label={t('Share')}
+            >
+              <ShareIcon size={16} stroke="#141414" />
+            </button>
+
+            <button
+              onClick={handleToggleWishlist}
+              className="w-9 h-9 rounded-xl bg-white/90 backdrop-blur-sm shadow-sm flex items-center justify-center text-gray-800 active:scale-95 transition-all cursor-pointer border border-gray-100"
+              title={isWishlisted ? t('Added to wishlist') : t('Add to wishlist')}
+              aria-label={isWishlisted ? t('Added to wishlist') : t('Add to wishlist')}
+            >
+              <Heart
+                size={16}
+                className={isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-800'}
+              />
+            </button>
+          </div>
+
+          {/* Mobile Overlay: Floating Prev & Next Arrows (hidden on desktop) */}
+          <button
+            onClick={prev}
+            className="lg:hidden absolute start-2.5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-white/85 backdrop-blur-sm shadow-sm flex items-center justify-center text-gray-800 active:scale-95 transition-all cursor-pointer border border-gray-100"
+            aria-label={t('Previous image')}
+          >
+            <ChevronArrowIcon direction={isRtl ? 'right' : 'left'} size={12} stroke="#141414" />
+          </button>
+
+          <button
+            onClick={next}
+            className="lg:hidden absolute end-2.5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-white/85 backdrop-blur-sm shadow-sm flex items-center justify-center text-gray-800 active:scale-95 transition-all cursor-pointer border border-gray-100"
+            aria-label={t('Next image')}
+          >
+            <ChevronArrowIcon direction={isRtl ? 'left' : 'right'} size={12} stroke="#141414" />
+          </button>
         </div>
 
-        {/* EXTERNAL Action Buttons Strip (Positioned OUTSIDE the image to the side!) */}
-        <div className="flex flex-col justify-between py-1 flex-shrink-0">
+        {/* EXTERNAL Action Buttons Strip (Desktop Only: lg:flex, hidden on mobile so image is never squeezed) */}
+        <div className="hidden lg:flex flex-col justify-between py-1 flex-shrink-0">
           {/* Top buttons: Share & Wishlist */}
           <div className="flex flex-col gap-3">
             <button
@@ -131,7 +175,7 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
 
       {/* Thumbnails Row: 5 portrait cards with rounded-xl and smooth transitions */}
       {images.length > 1 && (
-        <div className="grid grid-cols-5 gap-3">
+        <div className="grid grid-cols-5 gap-2 sm:gap-3">
           {images.slice(0, 5).map((img, i) => (
             <button
               key={i}

@@ -8,6 +8,7 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import CartDrawer from '../components/cart/CartDrawer';
 import WishlistDrawer from '../components/wishlist/WishlistDrawer';
+import FloatingCartButton from '../components/cart/FloatingCartButton';
 import ProductBreadcrumbs from '../components/product/ProductBreadcrumbs';
 import ProductHeroSection from '../components/product/ProductHeroSection';
 import { RelatedProducts, PopularProducts } from '../components/product/RelatedProducts';
@@ -40,6 +41,7 @@ export default function ProductPage() {
       <Navbar />
       <CartDrawer />
       <WishlistDrawer />
+      <FloatingCartButton />
 
       <PageMain>
         {isLoading && <ProductSkeleton />}

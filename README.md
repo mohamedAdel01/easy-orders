@@ -11,10 +11,12 @@ A pixel-perfect, highly responsive e-commerce product detail page built with **R
   - `cartStore`: Persistent cart (`localStorage`), quantity constraints, deduplication by variation combinations, real-time subtotal & total calculation.
   - `productStore`: Dynamic variation selection, variant price syncing, stock tracking, and combination availability checking.
   - `wishlistStore`: Persistent wishlist (`localStorage`), one-click toggle, badge count, and dedicated `WishlistDrawer`.
+  - `globalStore`: Tuple-based granular loading management `[service, boolean]`.
   - `i18nStore`: Complete localization (English & Arabic) with automatic `dir="rtl"` / `dir="ltr"` switching.
 - **Dynamic API Integration**: Live endpoint integration (`https://api.easy-orders.net/api/v1/products/slug/clear-theme/Sneakers12?join=reviews`) fetching real product details, images, variations (color swatches & size buttons), variants, and pricing.
 - **Full i18n & RTL Localization**: Follows `AGENTS.md` standards with direct English keys (`t('English Text')`), flat Arabic dictionary in `locales/ar.ts`, and visual directional arrow flipping (`ChevronArrowIcon` based on `isRtl`).
-- **Comprehensive Unit Testing**: 20 automated tests across 4 test suites using **Vitest** testing store actions, computed values, persistence, variant matching, and i18n translations.
+- **Comprehensive Unit Testing**: 26 automated tests across 5 test suites using **Vitest** testing store actions, computed values, persistence, variant matching, global loading state, and i18n translations.
+- **Performance Optimized**: Eager LCP image loading with `decoding="async"`, `React.memo` and atomic selectors to prevent redundant re-renders, and Rollup `manualChunks` reducing the application bundle to **83 kB**.
 
 ---
 
@@ -69,20 +71,23 @@ product-page/
 │   │   │   └── ProductCard.tsx      # Reusable product card with image, title, price, and star rating
 │   │   ├── cart/
 │   │   │   ├── CartDrawer.tsx       # Slide-out persistent cart drawer with keyboard & overlay support
-│   │   │   ├── CartItem.tsx         # Cart item with thumbnail, quantity buttons, and remove action
-│   │   │   └── CartSummary.tsx      # Subtotal, free shipping badge, and checkout CTA
+│   │   │   ├── CartItem.tsx         # Memoized cart item with thumbnail, quantity buttons, and remove action
+│   │   │   ├── CartSummary.tsx      # Subtotal, free shipping badge, and checkout CTA
+│   │   │   └── FloatingCartButton.tsx # Mobile floating cart button with live count badge
 │   │   ├── wishlist/
 │   │   │   └── WishlistDrawer.tsx   # Slide-out wishlist drawer with "Move to Cart" action
 │   │   └── ui/
-│   │       ├── QuantitySelector.tsx # Min/max constrained quantity counter
-│   │       ├── StarRating.tsx       # Figma star rating component (#FFA439)
+│   │       ├── ErrorBoundary.tsx    # React error boundary preventing white screen crashes
+│   │       ├── ErrorState.tsx       # Error state with interactive retry action
 │   │       ├── ProductSkeleton.tsx  # Smooth animated skeleton loading state
-│   │       └── ErrorState.tsx       # Error state with retry action
+│   │       ├── QuantitySelector.tsx # Min/max constrained quantity counter
+│   │       └── StarRating.tsx       # Memoized Figma star rating component (#FFA439)
 │   ├── test/
 │   │   ├── setup.ts                 # Vitest test setup and localStorage mocking
 │   │   ├── cartStore.test.ts        # Cart actions & calculations tests (7 tests)
 │   │   ├── productStore.test.ts     # Product & variant matching tests (4 tests)
 │   │   ├── wishlistStore.test.ts    # Wishlist persistence & toggle tests (5 tests)
+│   │   ├── globalStore.test.ts      # Granular service loading tracker tests (6 tests)
 │   │   └── i18n.test.ts             # i18n & RTL dictionary tests (4 tests)
 │   ├── pages/
 │   │   └── ProductPage.tsx          # Main PDP page orchestration
@@ -220,8 +225,16 @@ npm run preview
   - toggles language between en and ar
   - translates essential product keys accurately in Arabic dictionary
 
-Test Files  4 passed (4)
-Tests       20 passed (20)
+✓ src/test/globalStore.test.ts (6 tests)
+  - initializes with no service loading
+  - sets loading state for a service
+  - removes service loading state when set to false
+  - tracks multiple services independently
+  - correctly calculates isGlobalLoading
+  - checks specific service loading status
+
+Test Files  5 passed (5)
+Tests       26 passed (26)
 ```
 
 ---

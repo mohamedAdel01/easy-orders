@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { StarIcon } from '../icons';
 import type { Product } from '../../types';
 import { useProductStore } from '../../store/productStore';
@@ -33,7 +33,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
   const isLowStock = product.track_stock && stockCount > 0 && stockCount <= 5;
   const maxStock = product.track_stock ? Math.max(1, stockCount) : 99;
 
-  const validateVariations = (): boolean => {
+  const validateVariations = useCallback((): boolean => {
     if (product.variations && product.variations.length > 0) {
       const missing = product.variations.filter((v) => !selectedVariations[v.name]);
       if (missing.length > 0) {
@@ -42,9 +42,9 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       }
     }
     return true;
-  };
+  }, [product.variations, selectedVariations, t]);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = useCallback(() => {
     if (!validateVariations()) return;
     if (isOutOfStock) return;
 
@@ -60,14 +60,14 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);
-  };
+  }, [validateVariations, isOutOfStock, addItem, product.id, product.thumb, title, currentPrice, quantity, selectedVariations, maxStock]);
 
-  const handleCheckoutNow = () => {
+  const handleCheckoutNow = useCallback(() => {
     if (!validateVariations()) return;
     if (isOutOfStock) return;
     handleAddToCart();
     openCart();
-  };
+  }, [validateVariations, isOutOfStock, handleAddToCart, openCart]);
 
   return (
     <div className="flex flex-col select-none">

@@ -15,13 +15,14 @@ import { RelatedProducts, PopularProducts } from '../components/product/RelatedP
 import ReviewsSection from '../components/product/ReviewsSection';
 import ProductSkeleton from '../components/ui/ProductSkeleton';
 import ErrorState from '../components/ui/ErrorState';
+import ErrorBoundary from '../components/ui/ErrorBoundary';
 
 const DEFAULT_THEME = 'clear-theme';
 const DEFAULT_SLUG = 'Sneakers12';
 
 export default function ProductPage() {
   const { theme = DEFAULT_THEME, slug = DEFAULT_SLUG } = useParams();
-  const { data: product, isLoading, error } = useProduct(theme, slug);
+  const { data: product, isLoading, error, refetch } = useProduct(theme, slug);
   const { setProduct, setLoading, setError } = useProductStore();
 
   useEffect(() => {
@@ -43,20 +44,22 @@ export default function ProductPage() {
       <WishlistDrawer />
       <FloatingCartButton />
 
-      <PageMain>
-        {isLoading && <ProductSkeleton />}
-        {error && <ErrorState message={error.message} />}
+      <ErrorBoundary>
+        <PageMain>
+          {isLoading && <ProductSkeleton />}
+          {error && <ErrorState message={error.message} onRetry={() => refetch()} />}
 
-        {product && !isLoading && (
-          <>
-            <ProductBreadcrumbs product={product} />
-            <ProductHeroSection product={product} />
-            <RelatedProducts currentProductId={product.id} storeId={product.store_id} />
-            <ReviewsSection reviews={product.reviews || []} />
-            <PopularProducts currentProductId={product.id} storeId={product.store_id} />
-          </>
-        )}
-      </PageMain>
+          {product && !isLoading && (
+            <>
+              <ProductBreadcrumbs product={product} />
+              <ProductHeroSection product={product} />
+              <RelatedProducts currentProductId={product.id} storeId={product.store_id} />
+              <ReviewsSection reviews={product.reviews || []} />
+              <PopularProducts currentProductId={product.id} storeId={product.store_id} />
+            </>
+          )}
+        </PageMain>
+      </ErrorBoundary>
 
       <Footer />
     </PageContainer>

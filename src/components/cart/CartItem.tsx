@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Trash2 } from 'lucide-react';
 import type { CartItem as CartItemType } from '../../types';
 import { useCartStore } from '../../store/cartStore';
@@ -9,8 +10,9 @@ interface CartItemProps {
   item: CartItemType;
 }
 
-export default function CartItem({ item }: CartItemProps) {
-  const { removeItem, updateQuantity } = useCartStore();
+function CartItem({ item }: CartItemProps) {
+  const removeItem = useCartStore((s) => s.removeItem);
+  const updateQuantity = useCartStore((s) => s.updateQuantity);
   const { t } = useI18n();
 
   return (
@@ -22,6 +24,7 @@ export default function CartItem({ item }: CartItemProps) {
           alt={item.name}
           className="w-full h-full object-cover"
           loading="lazy"
+          decoding="async"
         />
       </div>
 
@@ -72,3 +75,5 @@ export default function CartItem({ item }: CartItemProps) {
     </div>
   );
 }
+
+export default memo(CartItem);

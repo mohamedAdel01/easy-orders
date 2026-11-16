@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { StarIcon } from '../icons';
 
 interface StarRatingProps {
@@ -8,7 +9,7 @@ interface StarRatingProps {
   count?: number;
 }
 
-export default function StarRating({ rating, maxStars = 5, size = 16, showCount = false, count }: StarRatingProps) {
+function StarRating({ rating, maxStars = 5, size = 16, showCount = false, count }: StarRatingProps) {
   return (
     <div className="flex items-center gap-1">
       {Array.from({ length: maxStars }, (_, i) => (
@@ -24,3 +25,5 @@ export default function StarRating({ rating, maxStars = 5, size = 16, showCount 
     </div>
   );
 }
+
+export default memo(StarRating);

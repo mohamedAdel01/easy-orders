@@ -74,6 +74,8 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
                       }
                 }
                 loading={index === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                fetchPriority={index === 0 ? 'high' : 'auto'}
               />
             );
           })}
@@ -192,6 +194,7 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
                 alt={`${product.name} thumbnail ${i + 1}`}
                 className="w-full h-full object-cover transition-transform duration-300"
                 loading="lazy"
+                decoding="async"
               />
             </button>
           ))}

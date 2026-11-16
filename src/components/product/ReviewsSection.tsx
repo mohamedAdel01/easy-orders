@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { StarIcon, LikeIcon, DislikeIcon, ChevronArrowIcon } from '../icons';
 import type { Review } from '../../types';
 import { FIGMA_REVIEWS } from '../../utils/mockData';
@@ -39,20 +39,24 @@ export default function ReviewsSection({ reviews: propReviews = [] }: ReviewsSec
     { star: 1, count: 0, pct: 0 },
   ];
 
-  const filtered = reviews.filter((r) => {
-    if (selectedRatings.length > 0 && !selectedRatings.includes(Math.floor(r.rating))) return false;
-    return true;
-  });
+  const filtered = useMemo(() => {
+    return reviews.filter((r) => {
+      if (selectedRatings.length > 0 && !selectedRatings.includes(Math.floor(r.rating))) return false;
+      return true;
+    });
+  }, [reviews, selectedRatings]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / REVIEWS_PER_PAGE));
-  const paginated = filtered.slice((currentPage - 1) * REVIEWS_PER_PAGE, currentPage * REVIEWS_PER_PAGE);
+  const paginated = useMemo(() => {
+    return filtered.slice((currentPage - 1) * REVIEWS_PER_PAGE, currentPage * REVIEWS_PER_PAGE);
+  }, [filtered, currentPage]);
 
-  const toggleRating = (star: number) => {
+  const toggleRating = useCallback((star: number) => {
     setSelectedRatings((prev) =>
       prev.includes(star) ? prev.filter((s) => s !== star) : [...prev, star]
     );
     setCurrentPage(1);
-  };
+  }, []);
 
   const toggleTopic = (topic: string) => {
     setSelectedTopics((prev) =>

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import type { Product } from '../../types';
 import ProductCard from './ProductCard';
@@ -33,8 +34,10 @@ export function RelatedProducts({ currentProductId, storeId }: SectionProps) {
     staleTime: 10 * 60 * 1000,
   });
 
-  const available = apiProducts.filter((p) => p.id !== currentProductId);
-  const products = available.length >= 5 ? available.slice(0, 5) : RELATED_PRODUCTS_DATA;
+  const products = useMemo(() => {
+    const available = apiProducts.filter((p) => p.id !== currentProductId);
+    return available.length >= 5 ? available.slice(0, 5) : RELATED_PRODUCTS_DATA;
+  }, [apiProducts, currentProductId]);
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 border-t border-gray-100">
@@ -69,8 +72,10 @@ export function PopularProducts({ currentProductId, storeId }: SectionProps) {
     staleTime: 10 * 60 * 1000,
   });
 
-  const available = apiProducts.filter((p) => p.id !== currentProductId);
-  const products = available.length >= 10 ? available.slice(5, 10) : POPULAR_THIS_WEEK_DATA;
+  const products = useMemo(() => {
+    const available = apiProducts.filter((p) => p.id !== currentProductId);
+    return available.length >= 10 ? available.slice(5, 10) : POPULAR_THIS_WEEK_DATA;
+  }, [apiProducts, currentProductId]);
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 border-t border-gray-100">

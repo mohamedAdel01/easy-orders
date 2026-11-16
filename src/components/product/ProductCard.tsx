@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { StarIcon } from '../icons';
 import type { Product } from '../../types';
 import { useI18n } from '../../hooks/useI18n';
@@ -6,7 +7,7 @@ interface ProductCardProps {
   product: Product;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+function ProductCard({ product }: ProductCardProps) {
   const { t } = useI18n();
   const brandName = product.categories?.[0]?.name || 'John Lewis ANYDAY';
   const displayPrice = product.sale_price > 0 ? product.sale_price : product.price;
@@ -24,6 +25,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           alt={product.name}
           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
+          decoding="async"
         />
       </div>
 
@@ -52,3 +54,5 @@ export default function ProductCard({ product }: ProductCardProps) {
     </div>
   );
 }
+
+export default memo(ProductCard);

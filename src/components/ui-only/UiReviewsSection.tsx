@@ -7,13 +7,13 @@ const REVIEWS_DATA = [
     avatar: '/figma-assets/0be0644f-1aec-44b2-a8cb-1185fc81399c.png',
     date: 'July 2, 2020 03:29 PM',
     title: 'This is amazing product I have.',
-    likes: 123,
+    likes: 128,
   },
   {
     id: 2,
     author: 'Darlene Robertson',
     avatar: '/figma-assets/93f9845b-677e-473d-847a-98e24275cbd6.png',
-    date: 'July 2, 2020 03:29 PM',
+    date: 'July 2, 2020 1:04 PM',
     title: 'This is amazing product I have.',
     likes: 123,
   },
@@ -50,6 +50,44 @@ export default function UiReviewsSection() {
   const [ratingOpen, setRatingOpen] = useState(true);
   const [topicsOpen, setTopicsOpen] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [likesState, setLikesState] = useState<
+    Record<number, { count: number; userLiked: boolean; userDisliked: boolean }>
+  >({
+    1: { count: 128, userLiked: false, userDisliked: false },
+    2: { count: 123, userLiked: false, userDisliked: false },
+    3: { count: 123, userLiked: false, userDisliked: false },
+    4: { count: 123, userLiked: false, userDisliked: false },
+  });
+
+  const handleLike = (id: number) => {
+    setLikesState((prev) => {
+      const cur = prev[id] || { count: 128, userLiked: false, userDisliked: false };
+      if (cur.userLiked) {
+        return { ...prev, [id]: { ...cur, count: cur.count - 1, userLiked: false } };
+      }
+      return {
+        ...prev,
+        [id]: { count: cur.count + 1, userLiked: true, userDisliked: false },
+      };
+    });
+  };
+
+  const handleDislike = (id: number) => {
+    setLikesState((prev) => {
+      const cur = prev[id] || { count: 128, userLiked: false, userDisliked: false };
+      if (cur.userDisliked) {
+        return { ...prev, [id]: { ...cur, userDisliked: false } };
+      }
+      return {
+        ...prev,
+        [id]: {
+          count: cur.userLiked ? cur.count - 1 : cur.count,
+          userLiked: false,
+          userDisliked: true,
+        },
+      };
+    });
+  };
 
   const toggleRating = (r: number) => {
     setSelectedRatings((prev) =>
@@ -292,34 +330,34 @@ export default function UiReviewsSection() {
 
         {/* Right: Review Lists (Figma node 79:669) */}
         <div className="flex-1 w-full">
-          {/* Header & Filter Tabs */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-gray-100">
-            <h4 className="font-semibold text-[20px] text-[#292929]">Review Lists</h4>
+          {/* Review Lists Title */}
+          <h4 className="font-semibold text-[20px] text-[#292929] tracking-[-0.2px] mb-[18px]">
+            Review Lists
+          </h4>
 
-            {/* Filter Tabs: 42px tall, rounded-[8px] */}
-            <div className="flex items-center gap-[8px] flex-wrap">
-              {[
-                { key: 'all', label: 'All Reviews' },
-                { key: 'photo', label: 'With Photo & Video' },
-                { key: 'desc', label: 'With Description' },
-              ].map(({ key, label }) => {
-                const isActive = activeTab === key;
-                return (
-                  <button
-                    key={key}
-                    type="button"
-                    onClick={() => setActiveTab(key as typeof activeTab)}
-                    className={`h-[42px] px-[16px] rounded-[8px] text-[14px] font-medium transition-all cursor-pointer border ${
-                      isActive
-                        ? 'bg-[#EBEBEB] text-[#141414] border-[#333333]'
-                        : 'bg-white text-[#666666] border-[#E6E6E6] hover:border-gray-400'
-                    }`}
-                  >
-                    {label}
-                  </button>
-                );
-              })}
-            </div>
+          {/* Filter Tabs: directly under the title */}
+          <div className="flex items-center gap-[12px] flex-wrap mb-[32px]">
+            {[
+              { key: 'all', label: 'All Reviews' },
+              { key: 'photo', label: 'With Photo & Video' },
+              { key: 'desc', label: 'With Description' },
+            ].map(({ key, label }) => {
+              const isActive = activeTab === key;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setActiveTab(key as typeof activeTab)}
+                  className={`h-[44px] px-[20px] rounded-[8px] text-[14px] sm:text-[15px] transition-all cursor-pointer border ${
+                    isActive
+                      ? 'bg-[#EBEBEB] text-[#141414] border-[#141414] font-semibold'
+                      : 'bg-white text-[#525252] border-[#E6E6E6] hover:border-gray-400 font-medium'
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
           </div>
 
           {/* Review Cards (4 exact reviews from Figma) */}
@@ -361,32 +399,42 @@ export default function UiReviewsSection() {
                     </span>
                   </div>
 
-                  {/* Like & Dislike Bordered Box (Figma: 80x50 rounded-[8px] border #E4E9EE) */}
+                  {/* Like & Dislike Bordered Box (Figma: 84x50 and 50x50 rounded-[8px] border #E4E9EE) */}
                   <div className="flex items-center gap-[12px]">
                     <button
                       type="button"
-                      className="border border-[#E4E9EE] hover:border-gray-400 rounded-[8px] px-3.5 py-1.5 flex items-center gap-2 cursor-pointer transition-colors"
+                      onClick={() => handleLike(review.id)}
+                      className={`h-[50px] min-w-[84px] px-4 border rounded-[8px] flex items-center justify-center gap-[8px] transition-all cursor-pointer active:scale-95 ${
+                        likesState[review.id]?.userLiked
+                          ? 'border-[#141414] bg-gray-50'
+                          : 'border-[#E4E9EE] bg-white hover:border-gray-400'
+                      }`}
                       aria-label="Like"
                     >
                       <img
                         src="/figma-assets/2f1a41d6-5fb2-4fe4-ab6c-6dd5a1427d77.svg"
                         alt="Like"
-                        className="size-[18px]"
+                        className="size-[22px]"
                       />
-                      <span className="font-normal text-[14px] text-[#0B0F0E]">
-                        {review.likes}
+                      <span className="font-normal text-[15px] sm:text-[16px] text-[#0B0F0E]">
+                        {likesState[review.id]?.count ?? review.likes}
                       </span>
                     </button>
 
                     <button
                       type="button"
-                      className="border border-[#E4E9EE] hover:border-gray-400 rounded-[8px] px-3 py-1.5 flex items-center justify-center cursor-pointer transition-colors"
+                      onClick={() => handleDislike(review.id)}
+                      className={`size-[50px] border rounded-[8px] flex items-center justify-center transition-all cursor-pointer active:scale-95 ${
+                        likesState[review.id]?.userDisliked
+                          ? 'border-[#141414] bg-gray-50'
+                          : 'border-[#E4E9EE] bg-white hover:border-gray-400'
+                      }`}
                       aria-label="Dislike"
                     >
                       <img
                         src="/figma-assets/c3d9fe16-bbfa-420c-a403-b6672be9b993.svg"
                         alt="Dislike"
-                        className="size-[18px] -scale-y-100"
+                        className="size-[22px] rotate-180"
                       />
                     </button>
                   </div>

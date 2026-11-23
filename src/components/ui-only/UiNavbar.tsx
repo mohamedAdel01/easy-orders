@@ -1,7 +1,13 @@
 import { useState } from 'react';
+import { useCartStore } from '../../store/cartStore';
+import { useWishlistStore } from '../../store/wishlistStore';
 
 export default function UiNavbar() {
   const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const totalCartItems = useCartStore((s) => s.getTotalItems());
+  const openCart = useCartStore((s) => s.openCart);
+  const totalWishlistItems = useWishlistStore((s) => s.getTotalItems());
+  const openWishlist = useWishlistStore((s) => s.openWishlist);
 
   return (
     <>
@@ -94,29 +100,46 @@ export default function UiNavbar() {
               {/* Wishlist (Figma node 57:1313: 20x20 heart icon) */}
               <button
                 type="button"
-                className="size-[20px] hover:opacity-70 transition-opacity cursor-pointer flex items-center justify-center"
-                aria-label="Wishlist"
+                onClick={openWishlist}
+                className="relative size-[20px] hover:opacity-70 transition-opacity cursor-pointer flex items-center justify-center"
+                aria-label={`Wishlist (${totalWishlistItems} items)`}
+                title="View Wishlist"
               >
                 <img
                   src="/figma-assets/e06ba56f-c3fe-473a-96b0-09a3eae8ebbd.svg"
                   alt="Wishlist"
                   className="size-[20px]"
                 />
+                {totalWishlistItems > 0 && (
+                  <div className="absolute -top-[5px] -right-[5px] min-w-[14px] h-[14px] px-1 rounded-full bg-red-600 flex items-center justify-center shadow-xs">
+                    <span className="font-['Clash_Grotesk'] font-bold text-[8px] text-white leading-none">
+                      {totalWishlistItems}
+                    </span>
+                  </div>
+                )}
               </button>
 
               {/* Cart Bag + Badge (Figma node 57:1315 & 57:1330: 20x20 bag + 13x13 badge) */}
-              <div className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center justify-center">
+              <button
+                type="button"
+                onClick={openCart}
+                className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center justify-center"
+                aria-label={`Cart (${totalCartItems} items)`}
+                title="View Shopping Cart"
+              >
                 <img
                   src="/figma-assets/7b1aff53-e39a-4ee8-b49b-a30dbb0810c5.svg"
                   alt="Cart"
                   className="size-[20px]"
                 />
-                <div className="absolute -top-[3px] -right-[4px] size-[13px] rounded-full bg-[#141414] flex items-center justify-center">
-                  <span className="font-['Clash_Grotesk'] font-medium text-[8px] text-white leading-none">
-                    1
-                  </span>
-                </div>
-              </div>
+                {totalCartItems > 0 && (
+                  <div className="absolute -top-[3px] -right-[4px] min-w-[13px] h-[13px] px-0.5 rounded-full bg-[#141414] flex items-center justify-center shadow-xs">
+                    <span className="font-['Clash_Grotesk'] font-medium text-[8px] text-white leading-none">
+                      {totalCartItems}
+                    </span>
+                  </div>
+                )}
+              </button>
             </div>
           </div>
         </div>

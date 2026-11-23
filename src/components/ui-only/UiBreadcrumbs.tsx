@@ -1,4 +1,14 @@
-export default function UiBreadcrumbs() {
+import type { Product } from '../../types';
+
+interface UiBreadcrumbsProps {
+  product?: Product | null;
+}
+
+export default function UiBreadcrumbs({ product }: UiBreadcrumbsProps) {
+  const category = product?.categories?.[1]?.name || product?.categories?.[0]?.name || 'Women';
+  const subcategory = product?.categories?.[2]?.name || product?.categories?.[1]?.name || "Women's Shirts & Tops";
+  const title = product?.name || 'Long Sleeve Overshirt, Khaki, 6';
+
   return (
     <nav
       aria-label="Breadcrumb"
@@ -15,8 +25,8 @@ export default function UiBreadcrumbs() {
             className="size-[12px]"
           />
         </div>
-        <a href="#women" className="text-[#8F8F8F] hover:text-[#141414] transition-colors leading-[1.6]">
-          Women
+        <a href="#category" className="text-[#8F8F8F] hover:text-[#141414] transition-colors leading-[1.6]">
+          {category}
         </a>
         <div className="size-[12px] shrink-0 flex items-center justify-center">
           <img
@@ -25,8 +35,8 @@ export default function UiBreadcrumbs() {
             className="size-[12px]"
           />
         </div>
-        <a href="#shirts" className="text-[#8F8F8F] hover:text-[#141414] transition-colors leading-[1.6]">
-          Women's Shirts &amp; Tops
+        <a href="#subcategory" className="text-[#8F8F8F] hover:text-[#141414] transition-colors leading-[1.6]">
+          {subcategory}
         </a>
         <div className="size-[12px] shrink-0 flex items-center justify-center">
           <img
@@ -35,8 +45,8 @@ export default function UiBreadcrumbs() {
             className="size-[12px]"
           />
         </div>
-        <span className="text-[#292929] leading-[1.6] font-medium">
-          Long Sleeve Overshirt, Khaki, 6
+        <span className="text-[#292929] leading-[1.6] font-medium truncate max-w-[300px] sm:max-w-none">
+          {title}
         </span>
       </div>
     </nav>

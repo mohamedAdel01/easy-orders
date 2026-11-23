@@ -45,6 +45,162 @@ export const FIGMA_REVIEWS: Review[] = [
   },
 ];
 
+export const FIGMA_PRODUCT: Product = {
+  id: 'prod-figma-overshirt-6',
+  name: 'Long Sleeve Overshirt, Khaki, 6',
+  price: 40.0,
+  sale_price: 28.0,
+  description:
+    'Boba etiam ut bulla tea est potus dilectus singulari compositione saporum et textuum, quae in Taiwan annis 1980 orta sunt. Boba refert ad pilas masticas tapiocas in fundo potus inventas, quae typice lacte tea nigro sapiuntur. Boba phaenomenon in orbem terrarum diffudit, multiplicibus variantibus et saporibus omnibus gustibus accommodatis.',
+  slug: 'overshirt-khaki-6',
+  thumb: '/figma-assets/89a23379-492e-4db9-b748-9b06329aec8f.png',
+  images: [
+    '/figma-assets/89a23379-492e-4db9-b748-9b06329aec8f.png',
+    '/figma-assets/20929a7a-8f4e-4700-a789-353527830406.png',
+    '/figma-assets/aca2cc20-174c-4991-96d6-8f6dbfd80b58.png',
+    '/figma-assets/9273914d-4beb-4924-ad40-8c24a86b498f.png',
+    '/figma-assets/25d25921-f489-449b-ad57-eee494d7a7cf.png',
+  ],
+  quantity: 50,
+  track_stock: true,
+  disable_orders_for_no_stock: false,
+  categories: [
+    { id: 'cat-anyday', name: 'John Lewis ANYDAY', slug: 'anyday' },
+    { id: 'cat-women', name: 'Women', slug: 'women' },
+    { id: 'cat-tops', name: "Women's Shirts & Tops", slug: 'womens-shirts-tops' },
+  ],
+  variations: [
+    {
+      id: 'var-color',
+      name: 'Color',
+      product_id: 'prod-figma-overshirt-6',
+      type: 'color',
+      props: [
+        { id: 'c-brown', name: 'Royal Brown', value: '#534029' },
+        { id: 'c-white', name: 'Off White', value: '#EBEBEB' },
+        { id: 'c-blue', name: 'Slate Blue', value: '#3A6A90' },
+        { id: 'c-navy', name: 'Dark Navy', value: '#11171D' },
+      ],
+    },
+    {
+      id: 'var-size',
+      name: 'Size',
+      product_id: 'prod-figma-overshirt-6',
+      type: 'button',
+      props: [
+        { id: 's-6', name: '6' },
+        { id: 's-8', name: '8' },
+        { id: 's-10', name: '10' },
+        { id: 's-14', name: '14' },
+        { id: 's-18', name: '18' },
+        { id: 's-20', name: '20' },
+      ],
+    },
+  ],
+  variants: [
+    {
+      id: 'var-rb-6',
+      product_id: 'prod-figma-overshirt-6',
+      price: 40.0,
+      sale_price: 28.0,
+      quantity: 10,
+      taager_code: 'OVS-RB-6',
+      variation_props: [
+        { id: 'vp-c1', variation: 'Color', variation_prop: 'Royal Brown', product_variant_id: 'var-rb-6' },
+        { id: 'vp-s6', variation: 'Size', variation_prop: '6', product_variant_id: 'var-rb-6' },
+      ],
+    },
+    {
+      id: 'var-rb-8',
+      product_id: 'prod-figma-overshirt-6',
+      price: 40.0,
+      sale_price: 28.0,
+      quantity: 15,
+      taager_code: 'OVS-RB-8',
+      variation_props: [
+        { id: 'vp-c1', variation: 'Color', variation_prop: 'Royal Brown', product_variant_id: 'var-rb-8' },
+        { id: 'vp-s8', variation: 'Size', variation_prop: '8', product_variant_id: 'var-rb-8' },
+      ],
+    },
+    {
+      id: 'var-rb-10',
+      product_id: 'prod-figma-overshirt-6',
+      price: 40.0,
+      sale_price: 28.0,
+      quantity: 12,
+      taager_code: 'OVS-RB-10',
+      variation_props: [
+        { id: 'vp-c1', variation: 'Color', variation_prop: 'Royal Brown', product_variant_id: 'var-rb-10' },
+        { id: 'vp-s10', variation: 'Size', variation_prop: '10', product_variant_id: 'var-rb-10' },
+      ],
+    },
+    {
+      id: 'var-rb-14',
+      product_id: 'prod-figma-overshirt-6',
+      price: 40.0,
+      sale_price: 28.0,
+      quantity: 8,
+      taager_code: 'OVS-RB-14',
+      variation_props: [
+        { id: 'vp-c1', variation: 'Color', variation_prop: 'Royal Brown', product_variant_id: 'var-rb-14' },
+        { id: 'vp-s14', variation: 'Size', variation_prop: '14', product_variant_id: 'var-rb-14' },
+      ],
+    },
+    {
+      id: 'var-rb-18',
+      product_id: 'prod-figma-overshirt-6',
+      price: 40.0,
+      sale_price: 28.0,
+      quantity: 5,
+      taager_code: 'OVS-RB-18',
+      variation_props: [
+        { id: 'vp-c1', variation: 'Color', variation_prop: 'Royal Brown', product_variant_id: 'var-rb-18' },
+        { id: 'vp-s18', variation: 'Size', variation_prop: '18', product_variant_id: 'var-rb-18' },
+      ],
+    },
+    {
+      id: 'var-rb-20',
+      product_id: 'prod-figma-overshirt-6',
+      price: 40.0,
+      sale_price: 28.0,
+      quantity: 4,
+      taager_code: 'OVS-RB-20',
+      variation_props: [
+        { id: 'vp-c1', variation: 'Color', variation_prop: 'Royal Brown', product_variant_id: 'var-rb-20' },
+        { id: 'vp-s20', variation: 'Size', variation_prop: '20', product_variant_id: 'var-rb-20' },
+      ],
+    },
+    {
+      id: 'var-ow-8',
+      product_id: 'prod-figma-overshirt-6',
+      price: 40.0,
+      sale_price: 28.0,
+      quantity: 10,
+      taager_code: 'OVS-OW-8',
+      variation_props: [
+        { id: 'vp-c2', variation: 'Color', variation_prop: 'Off White', product_variant_id: 'var-ow-8' },
+        { id: 'vp-s8', variation: 'Size', variation_prop: '8', product_variant_id: 'var-ow-8' },
+      ],
+    },
+    {
+      id: 'var-sb-20-oos',
+      product_id: 'prod-figma-overshirt-6',
+      price: 40.0,
+      sale_price: 28.0,
+      quantity: 0, // Out of stock for testing
+      taager_code: 'OVS-SB-20',
+      variation_props: [
+        { id: 'vp-c3', variation: 'Color', variation_prop: 'Slate Blue', product_variant_id: 'var-sb-20-oos' },
+        { id: 'vp-s20', variation: 'Size', variation_prop: '20', product_variant_id: 'var-sb-20-oos' },
+      ],
+    },
+  ],
+  reviews: FIGMA_REVIEWS,
+  store_id: 'store-john-lewis',
+  created_at: '2024-01-01T00:00:00Z',
+  updated_at: '2024-01-01T00:00:00Z',
+};
+
 export const RELATED_PRODUCTS_DATA: Product[] = [
   {
     id: 'rel-1',

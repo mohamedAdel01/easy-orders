@@ -1,69 +1,42 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useProduct } from '../hooks/useProduct';
-import { useProductStore } from '../store/productStore';
-import PageContainer from '../components/layout/PageContainer';
-import PageMain from '../components/layout/PageMain';
-import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
-import CartDrawer from '../components/cart/CartDrawer';
-import WishlistDrawer from '../components/wishlist/WishlistDrawer';
-import FloatingCartButton from '../components/cart/FloatingCartButton';
-import ProductBreadcrumbs from '../components/product/ProductBreadcrumbs';
-import ProductHeroSection from '../components/product/ProductHeroSection';
-import { RelatedProducts, PopularProducts } from '../components/product/RelatedProducts';
-import ReviewsSection from '../components/product/ReviewsSection';
-import ProductSkeleton from '../components/ui/ProductSkeleton';
-import ErrorState from '../components/ui/ErrorState';
-import ErrorBoundary from '../components/ui/ErrorBoundary';
-import FloatingPageSwitcher from '../components/common/FloatingPageSwitcher';
-
-const DEFAULT_THEME = 'clear-theme';
-const DEFAULT_SLUG = 'Sneakers12';
+import UiNavbar from '../components/ui-only/UiNavbar';
+import UiBreadcrumbs from '../components/ui-only/UiBreadcrumbs';
+import UiProductHero from '../components/ui-only/UiProductHero';
+import UiRelatedProducts from '../components/ui-only/UiRelatedProducts';
+import UiReviewsSection from '../components/ui-only/UiReviewsSection';
+import UiPopularProducts from '../components/ui-only/UiPopularProducts';
+import UiFooter from '../components/ui-only/UiFooter';
 
 export default function ProductPage() {
-  const { theme = DEFAULT_THEME, slug = DEFAULT_SLUG } = useParams();
-  const { data: product, isLoading, error, refetch } = useProduct(theme, slug);
-  const { setProduct, setLoading, setError } = useProductStore();
-
   useEffect(() => {
-    setLoading(isLoading);
-  }, [isLoading, setLoading]);
-
-  useEffect(() => {
-    if (product) setProduct(product);
-  }, [product, setProduct]);
-
-  useEffect(() => {
-    if (error) setError(error.message);
-  }, [error, setError]);
+    document.title = 'John Lewis ANYDAY Long Sleeve Overshirt, Khaki, 6';
+  }, []);
 
   return (
-    <PageContainer>
-      <Navbar />
-      <CartDrawer />
-      <WishlistDrawer />
-      <FloatingCartButton />
+    <div className="min-h-screen bg-white flex flex-col font-['Clash_Grotesk'] text-[#141414] antialiased selection:bg-black selection:text-white">
+      {/* 1. Header & Offer Bar (100% at y=0, exactly as in Figma) */}
+      <UiNavbar />
 
-      <ErrorBoundary>
-        <PageMain>
-          {isLoading && <ProductSkeleton />}
-          {error && <ErrorState message={error.message} onRetry={() => refetch()} />}
+      {/* 2. Main Body Content (All Sections) */}
+      <main className="flex-1">
+        {/* Breadcrumb */}
+        <UiBreadcrumbs />
 
-          {product && !isLoading && (
-            <>
-              <ProductBreadcrumbs product={product} />
-              <ProductHeroSection product={product} />
-              <RelatedProducts currentProductId={product.id} storeId={product.store_id} />
-              <ReviewsSection reviews={product.reviews || []} />
-              <PopularProducts currentProductId={product.id} storeId={product.store_id} />
-            </>
-          )}
-        </PageMain>
-      </ErrorBoundary>
+        {/* Hero Section (Image + Info + CTAs) */}
+        <UiProductHero />
 
-      <Footer />
-      <FloatingPageSwitcher current="dynamic" />
-    </PageContainer>
+        {/* Related Product */}
+        <UiRelatedProducts />
+
+        {/* Product Reviews */}
+        <UiReviewsSection />
+
+        {/* Popular this week */}
+        <UiPopularProducts />
+      </main>
+
+      {/* 3. Footer */}
+      <UiFooter />
+    </div>
   );
 }

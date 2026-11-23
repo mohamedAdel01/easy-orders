@@ -77,12 +77,6 @@ export default function UiProductHero() {
               ))}
             </div>
           </div>
-                    className="w-full h-full object-cover transition-transform duration-300"
-                  />
-                </button>
-              ))}
-            </div>
-          </div>
 
           {/* Action Buttons Column: 52px wide, 610px height (Figma node 79:664) */}
           <div className="hidden lg:flex flex-col justify-between h-[610px] w-[52px] shrink-0">

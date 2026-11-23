@@ -1,20 +1,5 @@
 import { useState } from 'react';
-
-const MAIN_IMAGES = [
-  '/figma-assets/89a23379-492e-4db9-b748-9b06329aec8f.png', // Image 19 in Figma node 57:1343 (Main view)
-  '/figma-assets/20929a7a-8f4e-4700-a789-353527830406.png', // Image 19/20 in Figma node 57:1352 (Back view)
-  '/figma-assets/aca2cc20-174c-4991-96d6-8f6dbfd80b58.png', // Image 20 in Figma node 57:1354 (Full body pose)
-  '/figma-assets/9273914d-4beb-4924-ad40-8c24a86b498f.png', // Image 21 in Figma node 57:1356 (Flat lay shirt)
-  '/figma-assets/25d25921-f489-449b-ad57-eee494d7a7cf.png', // Image 23 in Figma node 57:1358 (Fabric & belt detail)
-];
-
-const THUMBNAIL_IMAGES = [
-  '/figma-assets/d3ac9abe-7e76-48dc-b804-f02de0bbb1e8.png', // Image 22 in Figma node 57:1350 (Thumb 1)
-  '/figma-assets/20929a7a-8f4e-4700-a789-353527830406.png', // Image 19/20 in Figma node 57:1352 (Thumb 2)
-  '/figma-assets/aca2cc20-174c-4991-96d6-8f6dbfd80b58.png', // Image 20 in Figma node 57:1354 (Thumb 3)
-  '/figma-assets/9273914d-4beb-4924-ad40-8c24a86b498f.png', // Image 21 in Figma node 57:1356 (Thumb 4)
-  '/figma-assets/25d25921-f489-449b-ad57-eee494d7a7cf.png', // Image 23 in Figma node 57:1358 (Thumb 5)
-];
+import UiProductGallery from './UiProductGallery';
 
 const SIZES = ['6', '8', '10', '14', '18', '20'];
 
@@ -26,7 +11,6 @@ const COLORS = [
 ];
 
 export default function UiProductHero() {
-  const [activeThumb, setActiveThumb] = useState(0);
   const [selectedColor, setSelectedColor] = useState('Royal Brown');
   const [selectedSize, setSelectedSize] = useState('8');
   const [isWishlisted, setIsWishlisted] = useState(false);
@@ -35,112 +19,12 @@ export default function UiProductHero() {
   return (
     <section className="max-w-[1200px] mx-auto px-4 lg:px-6 xl:px-0 pt-0 pb-16 font-['Clash_Grotesk'] select-none">
       <div className="flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-[60px] xl:gap-[135px]">
-        {/* Left: Product Image & Buttons (Figma node 79:665: 545px wide) */}
-        <div className="flex gap-4 lg:gap-[35px] items-start w-full lg:w-[545px] shrink-0">
-          {/* Main Image + Thumbnails (458px wide) */}
-          <div className="flex flex-col gap-[24px] w-full lg:w-[458px] shrink-0">
-            {/* Main Image: 458x610px with smooth transition (Figma node 57:1342) */}
-            <div className="bg-[#F2F2F2] w-full lg:w-[458px] h-[400px] sm:h-[500px] lg:h-[610px] rounded-[8px] overflow-hidden relative shrink-0">
-              {MAIN_IMAGES.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={img}
-                  alt={`Product main view ${idx + 1}`}
-                  className={`absolute inset-0 w-full h-full object-contain object-center transition-all duration-400 ease-out ${
-                    activeThumb === idx
-                      ? 'opacity-100 scale-100 z-10 pointer-events-auto'
-                      : 'opacity-0 scale-[1.015] z-0 pointer-events-none'
-                  }`}
-                />
-              ))}
-            </div>
-
-            {/* Thumbnails Row: 5 portrait cards, each 76x100px, exactly fitted with no scrollbar */}
-            <div className="flex items-center justify-between w-full lg:w-[458px] overflow-x-auto no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-              {THUMBNAIL_IMAGES.map((img, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setActiveThumb(idx)}
-                  className={`w-[68px] sm:w-[76px] h-[90px] sm:h-[100px] rounded-[8px] overflow-hidden bg-[#F2F2F2] shrink-0 transition-all duration-300 cursor-pointer ${
-                    activeThumb === idx
-                      ? 'border-2 border-[#141414] scale-[1.02]'
-                      : 'border border-transparent hover:border-gray-300 opacity-80 hover:opacity-100'
-                  }`}
-                >
-                  <img
-                    src={img}
-                    alt={`Thumbnail ${idx + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-300"
-                  />
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Action Buttons Column: 52px wide, 610px height (Figma node 79:664) */}
-          <div className="hidden lg:flex flex-col justify-between h-[610px] w-[52px] shrink-0">
-            {/* Top Cluster: Share + Wishlist (Figma node 70:666, gap 20px) */}
-            <div className="flex flex-col gap-[20px] items-center">
-              <button
-                type="button"
-                onClick={() => alert('Link copied to clipboard!')}
-                className="size-[52px] rounded-[8px] bg-[#F2F2F2] hover:bg-[#E5E7EB] active:scale-95 flex items-center justify-center transition-all cursor-pointer"
-                title="Share"
-                aria-label="Share"
-              >
-                <img
-                  src="/figma-assets/9d132331-64c3-4468-bc2f-cdfab4761e58.svg"
-                  alt="Share"
-                  className="size-[20px]"
-                />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setIsWishlisted(!isWishlisted)}
-                className="size-[52px] rounded-[8px] bg-[#F2F2F2] hover:bg-[#E5E7EB] active:scale-95 flex items-center justify-center transition-all cursor-pointer"
-                title="Wishlist"
-                aria-label="Wishlist"
-              >
-                <img
-                  src="/figma-assets/4014fceb-ac58-4301-8f9c-e18c613e57a6.svg"
-                  alt="Wishlist"
-                  className={`size-[20px] ${isWishlisted ? 'filter drop-shadow-[0_0_2px_rgba(239,68,68,0.8)]' : ''}`}
-                />
-              </button>
-            </div>
-
-            {/* Bottom Cluster: Navigation Arrows Left (<) and Right (>) (Figma node 70:665, gap 20px) */}
-            <div className="flex flex-col gap-[20px] items-center">
-              <button
-                type="button"
-                onClick={() => setActiveThumb((t) => (t - 1 + MAIN_IMAGES.length) % MAIN_IMAGES.length)}
-                className="size-[52px] rounded-[8px] bg-[#F2F2F2] hover:bg-[#E5E7EB] active:scale-95 flex items-center justify-center transition-all cursor-pointer"
-                aria-label="Previous view"
-              >
-                <img
-                  src="/figma-assets/action-arrow.svg"
-                  alt="Previous"
-                  className="size-[20px] -rotate-90"
-                />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setActiveThumb((t) => (t + 1) % MAIN_IMAGES.length)}
-                className="size-[52px] rounded-[8px] bg-[#F2F2F2] hover:bg-[#E5E7EB] active:scale-95 flex items-center justify-center transition-all cursor-pointer"
-                aria-label="Next view"
-              >
-                <img
-                  src="/figma-assets/action-arrow.svg"
-                  alt="Next"
-                  className="size-[20px] rotate-90"
-                />
-              </button>
-            </div>
-          </div>
-        </div>
+        {/* Left: Product Image Gallery & Controls (Figma node 79:665: 545px wide) */}
+        <UiProductGallery
+          isWishlisted={isWishlisted}
+          onToggleWishlist={() => setIsWishlisted(!isWishlisted)}
+          onShare={() => alert('Link copied to clipboard!')}
+        />
 
         {/* Right: Product Info and CTA (Figma node 79:666: 520px wide) */}
         <div className="w-full lg:w-[520px] shrink-0 flex flex-col">

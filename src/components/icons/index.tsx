@@ -330,3 +330,152 @@ export const CartIcon: React.FC<IconProps> = ({
     />
   </svg>
 );
+
+// 10. Official Figma Wishlist Heart Icon
+export const WishlistIcon: React.FC<IconProps> = ({
+  className = '',
+  size = 20,
+  stroke = '#141414',
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    aria-hidden="true"
+  >
+    <path
+      d="M16.2188 3.32846C13.9841 1.95769 12.0337 2.51009 10.862 3.39001C10.3815 3.7508 10.1413 3.93119 10 3.93119C9.85867 3.93119 9.6185 3.7508 9.138 3.39001C7.96635 2.51009 6.01591 1.95769 3.7812 3.32846C0.848392 5.12745 0.184768 11.0624 6.94961 16.0695C8.2381 17.0232 8.88233 17.5 10 17.5C11.1177 17.5 11.7619 17.0232 13.0504 16.0695C19.8152 11.0624 19.1516 5.12745 16.2188 3.32846Z"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      stroke={stroke}
+    />
+  </svg>
+);
+
+// 11. Official Figma 20x20 Chevron Down Icon for Navbar
+export const NavChevronDownIcon: React.FC<IconProps> = ({
+  className = '',
+  size = 20,
+  stroke = '#141414',
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    aria-hidden="true"
+  >
+    <path
+      d="M5 8C5 8 8.68233 13 10 13C11.3176 13 15 8 15 8"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      stroke={stroke}
+    />
+  </svg>
+);
+
+// 12. Official Figma TickSquare Checkbox Icons
+export const TickSquareIcon: React.FC<IconProps> = ({
+  size = 20,
+  stroke = '#C4C8CC',
+  className = '',
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    aria-hidden="true"
+  >
+    <rect
+      x="1"
+      y="1"
+      width="18"
+      height="18"
+      rx="4.5"
+      stroke={stroke}
+      strokeWidth="1.5"
+    />
+  </svg>
+);
+
+export const TickSquareFilledIcon: React.FC<IconProps> = ({
+  size = 20,
+  color = '#141414',
+  className = '',
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    aria-hidden="true"
+  >
+    <rect width="20" height="20" rx="5" fill={color} />
+    <path
+      d="M5.5 10L8.5 13L14.5 7"
+      stroke="white"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+// 13. Official Figma Score Circle Arc Component
+export const RatingScoreArc: React.FC<{
+  score: number;
+  maxScore?: number;
+  size?: number;
+  trackColor?: string;
+  fillColor?: string;
+}> = ({ score, maxScore = 5, size = 84, trackColor = '#E4E9EE', fillColor = '#292929' }) => {
+  const radius = 37;
+  const strokeWidth = 8;
+  const circumference = 2 * Math.PI * radius;
+  const progress = Math.min(1, Math.max(0, score / maxScore));
+  const offset = circumference - progress * circumference;
+
+  return (
+    <div className="relative flex items-center justify-center shrink-0" style={{ width: size, height: size }}>
+      <svg width={size} height={size} viewBox="0 0 84 84" className="rotate-[-90deg]">
+        <circle
+          cx="42"
+          cy="42"
+          r={radius}
+          fill="none"
+          stroke={trackColor}
+          strokeWidth={strokeWidth}
+        />
+        <circle
+          cx="42"
+          cy="42"
+          r={radius}
+          fill="none"
+          stroke={fillColor}
+          strokeWidth={strokeWidth}
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="font-sans font-semibold text-[20px] text-[#0B0F0E]">
+          {score.toFixed(1)}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+

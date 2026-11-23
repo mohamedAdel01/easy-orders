@@ -7,24 +7,24 @@ interface VariationSelectorProps {
 }
 
 const DEFAULT_COLOR_SWATCHES = [
-  { name: 'Royal Brown', color: '#56442b' },
-  { name: 'Off White', color: '#eae8e4' },
-  { name: 'Slate Blue', color: '#3b688c' },
-  { name: 'Dark Navy', color: '#171e28' },
+  { name: 'Royal Brown', color: '#534029' },
+  { name: 'Off White', color: '#EBEBEB' },
+  { name: 'Slate Blue', color: '#3A6A90' },
+  { name: 'Dark Navy', color: '#11171D' },
 ];
 
 const COLOR_HEX_MAP: Record<string, string> = {
-  brown: '#56442b',
-  'royal brown': '#56442b',
-  black: '#171e28',
-  'dark navy': '#171e28',
+  brown: '#534029',
+  'royal brown': '#534029',
+  black: '#11171D',
+  'dark navy': '#11171D',
   biege: '#d4c3b3',
   beige: '#d4c3b3',
-  'off white': '#eae8e4',
-  'slate blue': '#3b688c',
+  'off white': '#EBEBEB',
+  'slate blue': '#3A6A90',
   white: '#ffffff',
-  blue: '#2563eb',
-  navy: '#171e28',
+  blue: '#3A6A90',
+  navy: '#11171D',
   khaki: '#6b6644',
 };
 
@@ -47,19 +47,19 @@ export default function VariationSelector({ variation }: VariationSelectorProps)
     const activeColor = selected || defaultColor;
 
     return (
-      <div className="space-y-2.5">
-        {/* Color Label */}
-        <div className="text-xs sm:text-sm">
-          <span className="text-gray-400 font-normal">{t('Color:')} </span>
-          <span className="font-bold text-gray-900 capitalize">{t(activeColor)}</span>
+      <div className="space-y-[18px]">
+        {/* Color Label (Figma node 57:1387: 20px Medium & Semibold) */}
+        <div className="text-[20px] font-sans leading-[1.2]">
+          <span className="font-medium text-[#8F8F8F]">{t('Color:')} </span>
+          <span className="font-semibold text-[#292929] capitalize">{t(activeColor)}</span>
         </div>
 
-        {/* Swatches Row matching Figma curves, padding and border styling */}
-        <div className="flex items-center gap-3">
+        {/* Swatches Row (Figma node 57:1388: 75x40px, rounded-[8px], 14px gap) */}
+        <div className="flex items-center gap-[14px] flex-wrap">
           {hasApiProps
             ? variation.props.map((prop) => {
                 const isSelected = activeColor.toLowerCase() === prop.name.toLowerCase();
-                const fallbackColor = COLOR_HEX_MAP[prop.name.toLowerCase()] || '#666';
+                const fallbackColor = COLOR_HEX_MAP[prop.name.toLowerCase()] || '#534029';
                 const isAvailable = isCombinationAvailable(variation.name, prop.name);
 
                 return (
@@ -69,32 +69,34 @@ export default function VariationSelector({ variation }: VariationSelectorProps)
                     disabled={!isAvailable}
                     onClick={() => setSelectedVariation(variation.name, prop.name)}
                     title={!isAvailable ? `${t(prop.name)} (${t('Out of Stock')})` : t(prop.name)}
-                    className={`w-14 h-8 p-[2px] rounded-[10px] transition-all relative cursor-pointer ${
+                    className={`w-[75px] h-[40px] rounded-[8px] transition-all relative cursor-pointer overflow-hidden flex items-center justify-center ${
                       !isAvailable
                         ? 'opacity-30 cursor-not-allowed border border-gray-200'
                         : isSelected
-                        ? 'border-2 border-black'
-                        : 'border border-transparent hover:border-gray-300'
+                        ? 'bg-white border border-[#141414]'
+                        : 'border border-transparent hover:opacity-90'
                     }`}
+                    style={!isSelected ? { backgroundColor: fallbackColor } : undefined}
                   >
-                    <div
-                      className="w-full h-full rounded-[6px] overflow-hidden bg-gray-100 relative"
-                      style={{ backgroundColor: fallbackColor }}
-                    >
-                      {prop.value && prop.value.startsWith('http') && (
-                        <img
-                          src={prop.value}
-                          alt={prop.name}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                      )}
-                      {!isAvailable && (
-                        <span className="absolute inset-0 flex items-center justify-center bg-white/40">
-                          <span className="w-full h-0.5 bg-red-500 rotate-45 transform origin-center"></span>
-                        </span>
-                      )}
-                    </div>
+                    {isSelected ? (
+                      <div
+                        className="w-[63px] h-[28px] rounded-[6px]"
+                        style={{ backgroundColor: fallbackColor }}
+                      />
+                    ) : null}
+                    {prop.value && prop.value.startsWith('http') && (
+                      <img
+                        src={prop.value}
+                        alt={prop.name}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    )}
+                    {!isAvailable && (
+                      <span className="absolute inset-0 flex items-center justify-center bg-white/40">
+                        <span className="w-full h-0.5 bg-red-500 rotate-45 transform origin-center"></span>
+                      </span>
+                    )}
                   </button>
                 );
               })
@@ -109,18 +111,21 @@ export default function VariationSelector({ variation }: VariationSelectorProps)
                     disabled={!isAvailable}
                     onClick={() => setSelectedVariation(variation.name, swatch.name)}
                     title={!isAvailable ? `${t(swatch.name)} (${t('Out of Stock')})` : t(swatch.name)}
-                    className={`w-14 h-8 p-[2px] rounded-[10px] transition-all relative cursor-pointer ${
+                    className={`w-[75px] h-[40px] rounded-[8px] transition-all relative cursor-pointer overflow-hidden flex items-center justify-center ${
                       !isAvailable
                         ? 'opacity-30 cursor-not-allowed border border-gray-200'
                         : isSelected
-                        ? 'border-2 border-black'
-                        : 'border border-transparent hover:border-gray-300'
+                        ? 'bg-white border border-[#141414]'
+                        : 'border border-transparent hover:opacity-90'
                     }`}
+                    style={!isSelected ? { backgroundColor: swatch.color } : undefined}
                   >
-                    <div
-                      className="w-full h-full rounded-[6px] overflow-hidden"
-                      style={{ backgroundColor: swatch.color }}
-                    />
+                    {isSelected && (
+                      <div
+                        className="w-[63px] h-[28px] rounded-[6px]"
+                        style={{ backgroundColor: swatch.color }}
+                      />
+                    )}
                   </button>
                 );
               })}
@@ -137,25 +142,25 @@ export default function VariationSelector({ variation }: VariationSelectorProps)
     const activeSize = selected || displaySizes[0];
 
     return (
-      <div className="space-y-2.5">
-        {/* Size Label & "View Size Chart" Link matching Figma */}
-        <div className="flex items-center justify-between text-xs sm:text-sm">
+      <div className="space-y-[18px]">
+        {/* Size Label & "View Size Chart" Link (Figma node 57:1395) */}
+        <div className="flex items-center justify-between text-[20px] font-sans leading-[1.2] w-full">
           <div>
-            <span className="text-gray-400 font-normal">{t('Size:')} </span>
-            <span className="font-bold text-gray-900">{activeSize}</span>
+            <span className="font-medium text-[#8F8F8F]">{t('Size:')} </span>
+            <span className="font-semibold text-[#292929]">{activeSize}</span>
           </div>
 
           <button
             type="button"
-            className="text-xs text-[#818B9C] underline hover:text-black font-normal transition-colors cursor-pointer"
+            className="text-[16px] text-[#525252] underline hover:text-black font-sans font-medium transition-colors cursor-pointer"
             onClick={() => alert(t('Size Chart: Standard UK regular sizing'))}
           >
             {t('View Size Chart')}
           </button>
         </div>
 
-        {/* Size Buttons Row with exact Figma curves & borders */}
-        <div className="flex items-center gap-3 flex-wrap">
+        {/* Size Buttons Row (Figma node 57:1398: 75x40px, rounded-[8px], 14px gap) */}
+        <div className="flex items-center gap-[14px] flex-wrap">
           {displaySizes.map((size) => {
             const isSelected = activeSize === size;
             const isAvailable = isCombinationAvailable(variation.name, size);
@@ -167,12 +172,12 @@ export default function VariationSelector({ variation }: VariationSelectorProps)
                 disabled={!isAvailable}
                 onClick={() => setSelectedVariation(variation.name, size)}
                 title={!isAvailable ? `${size} (${t('Out of Stock')})` : undefined}
-                className={`min-w-[54px] sm:min-w-[58px] h-11 sm:h-12 px-4 py-2.5 rounded-[10px] text-xs sm:text-sm font-semibold transition-all relative cursor-pointer ${
+                className={`w-[75px] h-[40px] rounded-[8px] font-sans font-semibold text-[20px] leading-[1.2] transition-all flex items-center justify-center cursor-pointer ${
                   !isAvailable
                     ? 'bg-gray-50 text-gray-300 border border-gray-100 cursor-not-allowed line-through'
                     : isSelected
-                    ? 'bg-[#EAEAEA] text-gray-900 border border-gray-400 font-bold shadow-none'
-                    : 'bg-white text-gray-800 border border-[#E5E7EB] hover:border-gray-400'
+                    ? 'bg-[#EBEBEB] text-[#141414] border border-[#333333]'
+                    : 'bg-white text-[#525252] border border-[#E6E6E6] hover:border-gray-400'
                 }`}
               >
                 {size}

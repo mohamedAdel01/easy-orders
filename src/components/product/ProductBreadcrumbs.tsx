@@ -12,40 +12,40 @@ export default function ProductBreadcrumbs({ product }: ProductBreadcrumbsProps)
   return (
     <nav
       aria-label="Breadcrumb"
-      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 sm:pt-4 pb-1 sm:pb-2 text-xs text-gray-400 select-none"
+      className="max-w-[1200px] mx-auto px-4 lg:px-0 pt-6 pb-6 text-[16px] font-sans font-medium select-none"
     >
-      <ol className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+      <ol className="flex items-center gap-2 flex-wrap">
         <li>
-          <a href="#" className="hover:text-black transition-colors">
+          <a href="/" className="text-[#8F8F8F] hover:text-[#141414] transition-colors">
             {t('Homepage')}
           </a>
         </li>
-        <li className="flex items-center text-gray-400 select-none">
-          <ChevronArrowIcon direction={isRtl ? 'left' : 'right'} size={11} stroke="#818B9C" />
+        <li className="flex items-center text-[#8F8F8F] select-none">
+          <ChevronArrowIcon direction={isRtl ? 'left' : 'right'} size={12} stroke="#8F8F8F" />
         </li>
         <li>
-          <a href="#" className="hover:text-black transition-colors">
+          <a href="#" className="text-[#8F8F8F] hover:text-[#141414] transition-colors">
             {t(product.categories?.[0]?.name || 'Women')}
           </a>
         </li>
-        <li className="flex items-center text-gray-400 select-none">
-          <ChevronArrowIcon direction={isRtl ? 'left' : 'right'} size={11} stroke="#818B9C" />
+        <li className="flex items-center text-[#8F8F8F] select-none">
+          <ChevronArrowIcon direction={isRtl ? 'left' : 'right'} size={12} stroke="#8F8F8F" />
         </li>
         <li>
-          <a href="#" className="hover:text-black transition-colors">
+          <a href="#" className="text-[#8F8F8F] hover:text-[#141414] transition-colors">
             {t(product.categories?.[1]?.name || "Women's Shirts & Tops")}
           </a>
         </li>
-        <li className="hidden sm:flex items-center text-gray-400 select-none">
-          <ChevronArrowIcon direction={isRtl ? 'left' : 'right'} size={11} stroke="#818B9C" />
+        <li className="hidden sm:flex items-center text-[#8F8F8F] select-none">
+          <ChevronArrowIcon direction={isRtl ? 'left' : 'right'} size={12} stroke="#8F8F8F" />
         </li>
-        <li className="hidden sm:inline text-gray-900 font-semibold truncate max-w-xs sm:max-w-md">
+        <li className="hidden sm:inline text-[#292929] font-medium truncate max-w-xs sm:max-w-md">
           {t(product.name)}
         </li>
       </ol>
 
-      {/* Mobile-only prominent product title above gallery matching Figma Mobile */}
-      <h1 className="sm:hidden text-lg font-bold text-gray-900 mt-2 leading-snug">
+      {/* Mobile prominent product title above gallery */}
+      <h1 className="sm:hidden text-xl font-semibold text-[#292929] mt-3 leading-snug">
         {t(product.name)}
       </h1>
     </nav>

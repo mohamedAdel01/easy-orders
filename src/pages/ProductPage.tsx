@@ -16,6 +16,7 @@ import ReviewsSection from '../components/product/ReviewsSection';
 import ProductSkeleton from '../components/ui/ProductSkeleton';
 import ErrorState from '../components/ui/ErrorState';
 import ErrorBoundary from '../components/ui/ErrorBoundary';
+import FloatingPageSwitcher from '../components/common/FloatingPageSwitcher';
 
 const DEFAULT_THEME = 'clear-theme';
 const DEFAULT_SLUG = 'Sneakers12';
@@ -62,6 +63,7 @@ export default function ProductPage() {
       </ErrorBoundary>
 
       <Footer />
+      <FloatingPageSwitcher current="dynamic" />
     </PageContainer>
   );
 }

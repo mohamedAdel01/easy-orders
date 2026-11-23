@@ -1,21 +1,77 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* Clash Grotesk - Primary Design Font */
+@font-face {
+  font-family: 'Clash Grotesk';
+  src: url('/fonts/ClashGrotesk-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Clash Grotesk';
+  src: url('/fonts/ClashGrotesk-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Clash Grotesk';
+  src: url('/fonts/ClashGrotesk-Semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Clash Grotesk';
+  src: url('/fonts/ClashGrotesk-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Raleway - Accent Labels Font */
+@font-face {
+  font-family: 'Raleway';
+  src: url('/fonts/Raleway-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --figma-canvas-max-width: 1200px;
+  --figma-black: #141414;
+  --figma-dark: #292929;
+  --figma-gray-body: #666666;
+  --figma-gray-muted: #8F8F8F;
+  --figma-gray-date: #818B9C;
+  --figma-surface: #F2F2F2;
+  --figma-border: #E6E6E6;
+  --figma-border-muted: #B8B8B8;
+  --figma-track: #E4E9EE;
+  --figma-star: #F5A623;
+}
 
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Clash Grotesk', 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 [dir="rtl"] body,
 [dir="rtl"] {
-  font-family: 'Cairo', 'Inter', system-ui, sans-serif;
+  font-family: 'Cairo', 'Clash Grotesk', 'Inter', system-ui, sans-serif;
 }
 
 .line-clamp-2 {
@@ -46,6 +102,17 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #a1a1a1;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Image zoom effect */

@@ -12,14 +12,14 @@ function ProductCard({ product }: ProductCardProps) {
   const brandName = product.categories?.[0]?.name || 'John Lewis ANYDAY';
   const displayPrice = product.sale_price > 0 ? product.sale_price : product.price;
 
-  // Realistic rating & sold data matching Figma
-  const rating = 4.5;
+  // Rating & Sold matching Figma card specs (node 57:1448)
+  const rating = 4.8;
   const soldCount = 1238;
 
   return (
-    <div className="group cursor-pointer flex flex-col select-none">
-      {/* Product Image */}
-      <div className="relative aspect-[3/4] w-full rounded-md overflow-hidden bg-[#f4f4f4] mb-2.5">
+    <div className="group cursor-pointer flex flex-col gap-[16px] select-none w-full lg:w-[212px]">
+      {/* Product Image: 212x284px, rounded-[8px], bg-[#F2F2F2] */}
+      <div className="relative w-full lg:w-[212px] h-[260px] sm:h-[284px] rounded-[8px] overflow-hidden bg-[#F2F2F2] shrink-0">
         <img
           src={product.thumb}
           alt={product.name}
@@ -29,27 +29,34 @@ function ProductCard({ product }: ProductCardProps) {
         />
       </div>
 
-      {/* Brand */}
-      <h4 className="text-xs sm:text-sm font-bold text-gray-900 truncate">
-        {t(brandName)}
-      </h4>
+      {/* Card Info Content (Figma node 57:1451) */}
+      <div className="flex flex-col gap-[8px] w-full">
+        <div className="flex flex-col gap-[6px] w-full">
+          {/* Brand & Price */}
+          <div className="flex items-center justify-between gap-2">
+            <h4 className="font-sans font-semibold text-[18px] text-[#292929] leading-[1.4] tracking-[-0.2px] truncate">
+              {t(brandName)}
+            </h4>
+            <span className="font-sans font-semibold text-[20px] text-[#141414] leading-[1.4] shrink-0">
+              ${displayPrice}
+            </span>
+          </div>
 
-      {/* Price */}
-      <div className="text-xs sm:text-sm font-bold text-gray-900 mt-0.5">
-        ${displayPrice}
-      </div>
+          {/* Product Name / Subtitle: 16px Regular #7A7A7A */}
+          <p className="font-sans font-normal text-[16px] text-[#7A7A7A] leading-[1.2] line-clamp-2">
+            {t(product.name)}
+          </p>
+        </div>
 
-      {/* Product Title / Subtitle */}
-      <p className="text-[11px] sm:text-xs text-gray-500 line-clamp-1 mt-0.5">
-        {t(product.name)}
-      </p>
-
-      {/* Star rating & Sold Count */}
-      <div className="flex items-center gap-1.5 mt-1 text-[11px] text-gray-500">
-        <StarIcon size={13} fill="#FFA439" className="flex-shrink-0" />
-        <span className="font-bold text-gray-800">{rating}</span>
-        <span className="text-gray-300">·</span>
-        <span className="text-gray-400">{soldCount} {t('Sold')}</span>
+        {/* Rating row: Star + 4.8 + Dot + Sold count (Figma node 57:1457) */}
+        <div className="flex items-center gap-[8px] mt-1 text-[16px] font-sans">
+          <StarIcon size={20} fill="#FFA439" className="shrink-0" />
+          <span className="font-normal text-[#0B0F0E]">{rating}</span>
+          <span className="size-[4px] rounded-full bg-[#8F8F8F] shrink-0 inline-block" />
+          <span className="font-normal text-[#818B9C] text-[14px] sm:text-[16px] truncate">
+            {soldCount} {t('Sold')}
+          </span>
+        </div>
       </div>
     </div>
   );

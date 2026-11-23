@@ -40,21 +40,21 @@ export function RelatedProducts({ currentProductId, storeId }: SectionProps) {
   }, [apiProducts, currentProductId]);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 border-t border-gray-100">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">
+    <section className="max-w-[1200px] mx-auto px-4 lg:px-0 py-12">
+      <div className="flex items-end justify-between mb-[24px]">
+        <h2 className="font-sans font-semibold text-[28px] text-[#141414] leading-[1.2] tracking-tight">
           {t('Related Product')}
         </h2>
         <a
           href="#"
-          className="text-xs font-semibold text-gray-900 underline hover:text-gray-600 transition-colors"
+          className="font-sans font-medium text-[16px] text-[#525252] underline hover:text-[#141414] transition-colors"
         >
           {t('View All')}
         </a>
       </div>
 
-      {/* Responsive Grid: 2 columns on mobile, 5 columns on desktop matching Figma */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 sm:gap-6">
+      {/* Responsive Grid: 2 columns on mobile, 5 columns on desktop with 35px gap matching Figma node 57:1447 */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-[35px]">
         {products.slice(0, 5).map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
@@ -78,21 +78,21 @@ export function PopularProducts({ currentProductId, storeId }: SectionProps) {
   }, [apiProducts, currentProductId]);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 border-t border-gray-100">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">
+    <section className="max-w-[1200px] mx-auto px-4 lg:px-0 py-12">
+      <div className="flex items-end justify-between mb-[24px]">
+        <h2 className="font-sans font-semibold text-[28px] text-[#141414] leading-[1.2] tracking-tight">
           {t('Popular this week')}
         </h2>
         <a
           href="#"
-          className="text-xs font-semibold text-gray-900 underline hover:text-gray-600 transition-colors"
+          className="font-sans font-medium text-[16px] text-[#525252] underline hover:text-[#141414] transition-colors"
         >
           {t('View All')}
         </a>
       </div>
 
-      {/* Responsive Grid: 2 columns on mobile, 5 columns on desktop matching Figma */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 sm:gap-6">
+      {/* Responsive Grid: 2 columns on mobile, 5 columns on desktop with 35px gap matching Figma */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-[35px]">
         {products.slice(0, 5).map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

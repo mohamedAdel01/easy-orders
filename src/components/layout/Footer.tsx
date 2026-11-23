@@ -25,89 +25,89 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#F2F2F2] text-gray-600 mt-20 border-t border-gray-200 select-none">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
-        {/* Main Section: Left Brand/Newsletter + Right 3 Link Columns sitting side-by-side */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 pb-12 items-start">
-          {/* Left Column: Logo, Underline Newsletter Input, and 4 Social Circles */}
-          <div className="lg:col-span-5 space-y-6">
-            {/* Logo */}
+    <footer className="bg-[#F2F2F2] text-[#666666] mt-20 select-none font-sans">
+      <div className="max-w-[1200px] mx-auto px-4 lg:px-0 pt-[72px] pb-[32px]">
+        {/* Main Section: Left Brand/Newsletter + Right 3 Link Columns */}
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-[60px] pb-14 items-start justify-between">
+          {/* Left Column: Logo, Underline Newsletter Input, and 4 Social Circles (310px wide) */}
+          <div className="w-full lg:w-[310px] space-y-6 shrink-0">
+            {/* Logo: 170x32px */}
             <div>
               <a href="/" className="inline-block">
                 <img
                   src="/logo.png"
                   alt="John Lewis & Partners"
-                  className="h-6 sm:h-7 w-auto object-contain"
+                  className="h-[32px] w-[170px] object-contain"
                 />
               </a>
             </div>
 
             {/* Newsletter Underline Input with Black Squircle Arrow Button matching Figma */}
             <form onSubmit={(e) => e.preventDefault()} className="max-w-sm pt-2">
-              <div className="flex items-end border-b border-gray-400 focus-within:border-black transition-colors pb-1 gap-2">
+              <div className="flex items-end border-b border-[#A3A3A3] focus-within:border-black transition-colors pb-1 gap-2">
                 <input
                   type="email"
                   placeholder={t('Get latest offers to your inbox')}
-                  className="w-full bg-transparent text-xs text-gray-800 placeholder-gray-500 outline-none py-1 pe-2 font-normal"
+                  className="w-full bg-transparent font-sans font-medium text-[16px] text-[#141414] placeholder-[#787A7C] outline-none py-1 pe-2"
                 />
                 <button
                   type="submit"
-                  className="w-9 h-8 bg-[#141414] hover:bg-black text-white rounded-lg flex items-center justify-center transition-colors flex-shrink-0 cursor-pointer shadow-sm"
+                  className="w-[52px] h-[36px] bg-[#141414] hover:bg-black text-white rounded-[8px] flex items-center justify-center transition-colors shrink-0 cursor-pointer shadow-sm"
                   aria-label={t('Subscribe')}
                 >
                   <ChevronArrowIcon
                     direction={isRtl ? 'left' : 'right'}
-                    size={12}
+                    size={14}
                     stroke="#ffffff"
                   />
                 </button>
               </div>
             </form>
 
-            {/* 4 Circular White Social Buttons matching Figma: Facebook, Instagram, Twitter, Mail */}
-            <div className="flex items-center gap-3 pt-2">
+            {/* 4 Circular White Social Buttons matching Figma: 36x36px */}
+            <div className="flex items-center gap-[16px] pt-2">
               <a
                 href="#"
                 aria-label="Facebook"
-                className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-800 hover:text-black hover:scale-105 transition-all"
+                className="w-[36px] h-[36px] rounded-full bg-white shadow-sm flex items-center justify-center text-[#141414] hover:scale-105 transition-all"
               >
-                <FacebookIcon size={13} fill="#141414" />
+                <FacebookIcon size={16} fill="#141414" />
               </a>
 
               <a
                 href="#"
                 aria-label="Instagram"
-                className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-800 hover:text-black hover:scale-105 transition-all"
+                className="w-[36px] h-[36px] rounded-full bg-white shadow-sm flex items-center justify-center text-[#141414] hover:scale-105 transition-all"
               >
-                <InstagramIcon size={14} stroke="#141414" />
+                <InstagramIcon size={16} stroke="#141414" />
               </a>
 
               <a
                 href="#"
                 aria-label="Twitter"
-                className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-800 hover:text-black hover:scale-105 transition-all"
+                className="w-[36px] h-[36px] rounded-full bg-white shadow-sm flex items-center justify-center text-[#141414] hover:scale-105 transition-all"
               >
-                <TwitterIcon size={13} fill="#141414" />
+                <TwitterIcon size={16} fill="#141414" />
               </a>
 
               <a
                 href="#"
                 aria-label="Mail"
-                className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-800 hover:text-black hover:scale-105 transition-all"
+                className="w-[36px] h-[36px] rounded-full bg-white shadow-sm flex items-center justify-center text-[#141414] hover:scale-105 transition-all"
               >
-                <MailIcon size={14} stroke="#141414" />
+                <MailIcon size={16} stroke="#141414" />
               </a>
             </div>
           </div>
 
-          {/* Right Area: 3 Columns matching Figma: Shop, Information, Company */}
-          <div className="lg:col-span-7 grid grid-cols-3 gap-6 sm:gap-10">
+          {/* Right Area: 3 Columns matching Figma: Shop, Information, Company (gap 60-120px) */}
+          <div className="grid grid-cols-3 gap-6 sm:gap-12 lg:gap-[120px] shrink-0">
             {/* 1. Shop */}
-            <div>
-              <h4 className="text-xs sm:text-sm font-bold text-gray-900 tracking-tight mb-4">
+            <div className="w-[110px] sm:w-[134px]">
+              <h4 className="font-sans font-semibold text-[14px] text-[#121212] tracking-tight mb-4">
                 {t('Shop')}
               </h4>
-              <ul className="space-y-3 text-xs text-gray-600 font-normal">
+              <ul className="space-y-[12px] font-sans font-normal text-[14px] leading-[22px] text-[#141414]">
                 {shopLinks.map((item) => (
                   <li key={item}>
                     <a href="#" className="hover:text-black transition-colors">
@@ -119,11 +119,11 @@ export default function Footer() {
             </div>
 
             {/* 2. Information */}
-            <div>
-              <h4 className="text-xs sm:text-sm font-bold text-gray-900 tracking-tight mb-4">
+            <div className="w-[110px] sm:w-[134px]">
+              <h4 className="font-sans font-semibold text-[14px] text-[#121212] tracking-tight mb-4">
                 {t('Information')}
               </h4>
-              <ul className="space-y-3 text-xs text-gray-600 font-normal">
+              <ul className="space-y-[12px] font-sans font-normal text-[14px] leading-[22px] text-[#141414]">
                 {infoLinks.map((item) => (
                   <li key={item}>
                     <a href="#" className="hover:text-black transition-colors">
@@ -135,11 +135,11 @@ export default function Footer() {
             </div>
 
             {/* 3. Company */}
-            <div>
-              <h4 className="text-xs sm:text-sm font-bold text-gray-900 tracking-tight mb-4">
+            <div className="w-[110px] sm:w-[134px]">
+              <h4 className="font-sans font-semibold text-[14px] text-[#121212] tracking-tight mb-4">
                 {t('Company')}
               </h4>
-              <ul className="space-y-3 text-xs text-gray-600 font-normal">
+              <ul className="space-y-[12px] font-sans font-normal text-[14px] leading-[22px] text-[#141414]">
                 {companyLinks.map((item) => (
                   <li key={item}>
                     <a href="#" className="hover:text-black transition-colors">
@@ -152,27 +152,27 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar matching Figma: 1200 x 46 Hug */}
-        <div className="border-t border-gray-300/70 pt-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-          <p className="font-normal text-gray-500">
+        {/* Bottom Bar: Dashed border #A3A3A3, height 46px */}
+        <div className="border-t border-dashed border-[#A3A3A3] pt-5 flex flex-col sm:flex-row items-center justify-between gap-4 font-sans text-[14px] text-[#3E3E59]">
+          <p className="font-normal text-[#3E3E59]">
             {t('© John Lewis plc 2001 - 2024')}
           </p>
 
-          <div className="flex items-center gap-6 text-gray-700 text-xs font-normal">
+          <div className="flex items-center gap-[32px] text-[#121212] font-medium">
             {/* Language Switcher */}
             <button
               onClick={toggleLanguage}
-              className="flex items-center gap-1.5 hover:text-black transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 hover:opacity-70 transition-opacity cursor-pointer"
             >
-              <span className="text-sm">{language === 'ar' ? '🇪🇬' : '🇺🇸'}</span>
+              <span className="text-base">{language === 'ar' ? '🇪🇬' : '🇬🇧'}</span>
               <span>{language === 'ar' ? 'العربية' : 'English'}</span>
-              <ChevronArrowIcon direction="down" size={10} stroke="#6B7280" />
+              <ChevronArrowIcon direction="down" size={10} stroke="#121212" />
             </button>
 
             {/* Currency */}
-            <div className="flex items-center gap-1.5 hover:text-black transition-colors cursor-pointer">
+            <div className="flex items-center gap-1.5 hover:opacity-70 transition-opacity cursor-pointer">
               <span>{language === 'ar' ? 'EGP' : 'USD'}</span>
-              <ChevronArrowIcon direction="down" size={10} stroke="#6B7280" />
+              <ChevronArrowIcon direction="down" size={10} stroke="#121212" />
             </div>
           </div>
         </div>

@@ -8,11 +8,11 @@ interface ProductHeroSectionProps {
 
 export default function ProductHeroSection({ product }: ProductHeroSectionProps) {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-14">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-start">
+    <section className="max-w-[1200px] mx-auto px-4 lg:px-0 pt-0 pb-16">
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-[135px] items-start">
         <ProductGallery product={product} />
         <ProductInfo product={product} />
       </div>
-    </div>
+    </section>
   );
 }

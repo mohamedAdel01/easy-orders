@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Heart } from 'lucide-react';
-import { SearchIcon, UserIcon, ChevronArrowIcon, CartIcon } from '../icons';
+import { SearchIcon, UserIcon, CartIcon, WishlistIcon, NavChevronDownIcon } from '../icons';
 import { useCartStore } from '../../store/cartStore';
 import { useWishlistStore } from '../../store/wishlistStore';
 import { useI18n } from '../../hooks/useI18n';
@@ -34,105 +33,108 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Top Black Announcement Bar */}
-      <div className="bg-[#111111] text-white text-[11px] sm:text-xs py-2 px-4 select-none">
-        <div className="max-w-7xl mx-auto flex items-center justify-center gap-1.5 sm:gap-2 text-center font-normal tracking-wide">
-          <span>{t('New season coming! Discount 10% for all product!')}</span>
-          <a href="#" className="font-semibold text-white hover:text-gray-300 transition-colors">
-            {t('Checkout Now!')}
-          </a>
-          <span className="bg-neutral-800 text-gray-200 text-[10px] sm:text-[11px] font-mono font-medium px-2 py-0.5 rounded-full border border-neutral-700 ms-1">
-            {formatTime(timeLeft.minutes)}:{formatTime(timeLeft.seconds)}
-          </span>
+      {/* 1. Top Offer / Announcement Bar (Figma node 57:1524) */}
+      <div className="bg-[#141414] text-white min-h-[42px] py-2 sm:py-0 flex items-center justify-center px-4 select-none">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-center">
+          <p className="font-sans font-medium text-[13px] sm:text-[14px] leading-tight text-white m-0">
+            {t('New season coming!  Discount 10% for all product!  Checkout Now!')}
+          </p>
+          <div className="bg-[#383838] w-[49px] h-[18px] rounded-[23px] flex items-center justify-center shrink-0">
+            <span className="font-sans font-medium text-[12px] leading-none text-white">
+              {formatTime(timeLeft.minutes)}:{formatTime(timeLeft.seconds)}
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Main Header */}
-      <header className="sticky top-0 z-40 bg-white border-b border-dashed border-gray-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)] select-none">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 sm:h-20 gap-3 sm:gap-4">
-            {/* Brand Logo - JOHN LEWIS & PARTNERS */}
-            <div className="flex-shrink-0">
+      {/* 2. Main Header (Figma node 57:1307 & Line 2 57:1333) */}
+      <header className="sticky top-0 z-40 bg-white select-none border-b border-dashed border-[#A3A3A3]/70">
+        <div className="max-w-[1200px] mx-auto px-4 lg:px-0">
+          <div className="flex items-center justify-between h-[64px] sm:h-[80px] lg:h-[94px]">
+            {/* Brand Logo - 170x32px in Figma */}
+            <div className="shrink-0 flex items-center">
               <a href="/" className="block">
                 <img
                   src="/logo.png"
                   alt="John Lewis & Partners"
-                  className="h-5 sm:h-7 w-auto object-contain"
+                  className="h-6 sm:h-7 lg:h-[32px] w-auto lg:w-[170px] object-contain"
                 />
               </a>
             </div>
 
-            {/* Right Navigation Controls */}
-            <div className="flex items-center gap-3 sm:gap-6 text-xs text-gray-700">
-              {/* 1. Search Icon (Figma Frame 7.svg) */}
+            {/* Right Navigation Controls - exactly 32px gap in Figma */}
+            <div className="flex items-center gap-4 sm:gap-6 lg:gap-8 text-[16px] text-[#141414]">
+              {/* Search Icon (Figma Frame 7: 20x20) */}
               <button
-                className="p-1 hover:text-black transition-colors"
+                className="p-1 hover:opacity-70 transition-opacity cursor-pointer flex items-center justify-center"
                 aria-label={t('Search')}
                 onClick={() => alert(t('Search...'))}
               >
-                <SearchIcon size={18} stroke="#141414" className="text-gray-900 hover:text-black" />
+                <SearchIcon size={20} stroke="#141414" />
               </button>
 
-              {/* 2. Categories Dropdown */}
+              {/* Categories Dropdown (Figma Frame 5: 16px medium text + 20x20 chevron down) */}
               <div className="relative hidden md:block">
                 <button
                   onClick={() => setCategoriesOpen(!categoriesOpen)}
-                  className="flex items-center gap-1.5 font-medium text-gray-800 hover:text-black py-1"
+                  className="flex items-center gap-1 font-sans font-medium text-[16px] text-[#141414] hover:opacity-70 transition-opacity py-1 cursor-pointer"
                 >
                   <span>{t('Categories')}</span>
-                  <ChevronArrowIcon direction="down" size={11} stroke="#6B7280" />
+                  <NavChevronDownIcon size={20} stroke="#141414" className={categoriesOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
                 </button>
 
                 {categoriesOpen && (
-                  <div className="absolute end-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-50 text-xs">
-                    <a href="#" className="block px-4 py-2 hover:bg-gray-50 text-gray-700">
+                  <div className="absolute end-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-50 text-sm">
+                    <a href="#" className="block px-4 py-2 hover:bg-gray-50 text-[#141414] font-medium">
                       {t('Womenswear')}
                     </a>
-                    <a href="#" className="block px-4 py-2 hover:bg-gray-50 text-gray-700">
+                    <a href="#" className="block px-4 py-2 hover:bg-gray-50 text-[#141414] font-medium">
                       {t('Menswear')}
                     </a>
-                    <a href="#" className="block px-4 py-2 hover:bg-gray-50 text-gray-700">
+                    <a href="#" className="block px-4 py-2 hover:bg-gray-50 text-[#141414] font-medium">
                       {t('Shoes')}
                     </a>
                   </div>
                 )}
               </div>
 
-              {/* 4. Sign in (Figma Frame.svg) */}
-              <div className="hidden sm:flex items-center gap-1.5 cursor-pointer hover:text-black">
-                <UserIcon size={18} stroke="#141414" className="text-gray-900" />
-                <span className="font-medium text-gray-800">{t('Sign in')}</span>
+              {/* Sign in (Figma Frame 6: 20x20 User icon + 16px medium text) */}
+              <div className="hidden sm:flex items-center gap-1 cursor-pointer hover:opacity-70 transition-opacity">
+                <UserIcon size={20} stroke="#141414" />
+                <span className="font-sans font-medium text-[16px] text-[#141414]">{t('Sign in')}</span>
               </div>
 
-              {/* 5. Wishlist Heart with count */}
+              {/* Wishlist Heart (Figma Frame: 20x20 linear heart) */}
               <button
                 onClick={openWishlist}
-                className="p-1 hover:text-black transition-colors hidden sm:block relative cursor-pointer"
+                className="p-1 hover:opacity-70 transition-opacity relative cursor-pointer flex items-center justify-center"
                 aria-label={t('Wishlist')}
                 title={t('Wishlist')}
               >
-                <div className="relative">
-                  <Heart size={18} className="text-gray-700 hover:text-black stroke-[1.75]" />
+                <div className="relative flex items-center justify-center">
+                  <WishlistIcon size={20} stroke="#141414" />
                   {totalWishlist > 0 && (
-                    <span className="absolute -top-1 -end-1.5 bg-red-500 text-white text-[9px] font-bold rounded-full w-3.5 h-3.5 flex items-center justify-center">
+                    <span className="absolute -top-1.5 -end-2 bg-[#141414] text-white text-[8px] font-sans font-medium rounded-full w-[13px] h-[13px] flex items-center justify-center">
                       {totalWishlist}
                     </span>
                   )}
                 </div>
               </button>
 
-              {/* 6. Official Figma Cart Icon with count (Desktop / Tablet in header, Mobile has FloatingCartButton) */}
+              {/* Cart / Shopping Bag (Figma Frame: 20x20 basket icon + 13x13 badge) */}
               <button
                 onClick={toggleCart}
-                className="hidden sm:flex items-center gap-1 p-1 hover:text-black transition-colors relative cursor-pointer"
+                className="p-1 hover:opacity-70 transition-opacity relative cursor-pointer flex items-center justify-center"
                 aria-label={t('Shopping bag')}
                 title={t('Shopping bag')}
               >
-                <div className="relative">
+                <div className="relative flex items-center justify-center">
                   <CartIcon size={20} stroke="#141414" />
-                  <span className="absolute -top-1.5 -end-2 bg-black text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                    {totalItems}
-                  </span>
+                  {totalItems > 0 && (
+                    <span className="absolute -top-[3px] -end-[5px] bg-[#141414] text-white text-[8px] font-sans font-medium rounded-full w-[13px] h-[13px] flex items-center justify-center leading-none">
+                      {totalItems}
+                    </span>
+                  )}
                 </div>
               </button>
             </div>
